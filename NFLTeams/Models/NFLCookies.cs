@@ -12,10 +12,12 @@ namespace NFLTeams.Models
 
         private IRequestCookieCollection requestCookies { get; set; }
         private IResponseCookies responseCookies { get; set; }
-        public NFLCookies(IRequestCookieCollection cookies) {
+        public NFLCookies(IRequestCookieCollection cookies)
+        {
             requestCookies = cookies;
         }
-        public NFLCookies(IResponseCookies cookies) {
+        public NFLCookies(IResponseCookies cookies)
+        {
             responseCookies = cookies;
         }
 
@@ -35,7 +37,7 @@ namespace NFLTeams.Models
                 return new string[] { };   // empty string array
             else
                 return cookie.Split(Delimiter);
-        }      
+        }
 
         public void RemoveMyTeamIds()
         {

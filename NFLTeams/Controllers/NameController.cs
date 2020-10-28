@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using NFLTeams.Models;
 
 namespace NFLTeams.Controllers
 {
-    public class FavoritesController : Controller
+    public class NameController : Controller
     {
         [HttpGet]
         public ViewResult Index()
@@ -22,22 +21,15 @@ namespace NFLTeams.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Delete()
+        public RedirectToActionResult Change(TeamListViewModel model)
         {
             var session = new NFLSession(HttpContext.Session);
-            var cookies = new NFLCookies(HttpContext.Response.Cookies);
-
-            session.RemoveMyTeams();
-            cookies.RemoveMyTeamIds();
-
-            TempData["message"] = "Favorite teams cleared";
-
-            return RedirectToAction("Index", "Home",
-                new
-                {
-                    ActiveConf = session.GetActiveConf(),
-                    ActiveDiv = session.GetActiveDiv()
-                });
+            session.SetName(model.UserName);
+            return RedirectToAction("Index", "Home", new
+            {
+                ActiveConf = session.GetActiveConf(),
+                ActiveDiv = session.GetActiveDiv()
+            });
         }
     }
 }

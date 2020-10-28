@@ -22,13 +22,14 @@ namespace NFLTeams.Controllers
             session.SetActiveConf(activeConf);
             session.SetActiveDiv(activeDiv);
 
-            // if no count value in session, use data in cookie to restore fave teams in session 
+            
             int? count = session.GetMyTeamCount();
-            if (count == null) {
+            if (count == null)
+            {
                 var cookies = new NFLCookies(HttpContext.Request.Cookies);
                 string[] ids = cookies.GetMyTeamIds();
 
-                List<Team> myteams = new List<Team>(); 
+                List<Team> myteams = new List<Team>();
                 if (ids.Length > 0)
                     myteams = context.Teams.Include(t => t.Conference)
                         .Include(t => t.Division)
@@ -91,7 +92,8 @@ namespace NFLTeams.Controllers
             TempData["message"] = $"{model.Team.Name} added to your favorites";
 
             return RedirectToAction("Index",
-                new {
+                new
+                {
                     ActiveConf = session.GetActiveConf(),
                     ActiveDiv = session.GetActiveDiv()
                 });
